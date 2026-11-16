@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Правовой кодекс — База законопроектов</title>
+<meta name="description" content="Открытая база законопроектов и нормативных актов: структура статей, санкции, обоснование.">
+<style>
+:root{
+  --bg:#0b0f1a;
+  --bg-soft:#121828;
+  --card:#151c2e;
+  --line:rgba(255,255,255,.08);
+  --txt:#e6ebf5;
+  --muted:#8b9bb5;
+  --accent:#4f8cff;
+  --accent-2:#8b5cf6;
+  --gold:#d9b45b;
+  --ok:#37d399;
+  --warn:#ff7a59;
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--txt);line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(700px 400px at 12% -5%,rgba(79,140,255,.22),transparent 60%),
+    radial-gradient(600px 400px at 92% 8%,rgba(139,92,246,.18),transparent 60%),
+    radial-gradient(500px 500px at 50% 110%,rgba(217,180,91,.10),transparent 60%);
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(14px);
+  background:rgba(11,15,26,.72);
+  border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;gap:22px;height:66px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px;letter-spacing:.3px;text-decoration:none;color:var(--txt)}
+.logo-mark{
+  width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:0 0 auto;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  box-shadow:0 6px 18px rgba(79,140,255,.35);font-size:16px;
+}
+.nav-links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;
+  padding:8px 13px;border-radius:9px;transition:.2s;
+}
+.nav-links a:hover{color:var(--txt);background:rgba(255,255,255,.06)}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;
+  font:inherit;font-weight:600;font-size:14px;text-decoration:none;
+  padding:11px 20px;border-radius:11px;transition:.22s;
+}
+.btn-primary{
+  color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  box-shadow:0 8px 22px rgba(79,140,255,.32);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(79,140,255,.45)}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--txt);border:1px solid var(--line)}
+.btn-ghost:hover{background:rgba(255,255,255,.11)}
+
+/* ---------- hero ---------- */
+.hero{padding:86px 0 62px;position:relative}
+.tag{
+  display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;
+  letter-spacing:.9px;text-transform:uppercase;color:var(--gold);
+  background:rgba(217,180,91,.1);border:1px solid rgba(217,180,91,.28);
+  padding:7px 14px;border-radius:999px;margin-bottom:22px;
+}
+h1{
+  font-size:clamp(34px,5.4vw,62px);line-height:1.08;font-weight:800;letter-spacing:-1.2px;
+  margin-bottom:20px;max-width:16ch;
+}
+h1 span{background:linear-gradient(120deg,var(--accent),var(--accent-2) 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:clamp(15px,1.6vw,18.5px);color:var(--muted);max-width:62ch;margin-bottom:32px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.stat{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;transition:.25s;
+}
+.stat:hover{border-color:rgba(79,140,255,.45);transform:translateY(-3px)}
+.stat b{display:block;font-size:28px;font-weight:800;letter-spacing:-.6px}
+.stat i{font-style:normal;font-size:13px;color:var(--muted)}
+
+/* ---------- search ---------- */
+.section{padding:56px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.sec-head h2{font-size:clamp(24px,3.2vw,36px);font-weight:750;letter-spacing:-.7px}
+.sec-head p{color:var(--muted);font-size:15px;margin-top:6px}
+.tools{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.search{
+  flex:1 1 260px;display:flex;align-items:center;gap:10px;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 14px;
+  transition:.2s;
+}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,140,255,.15)}
+.search input{
+  flex:1;background:none;border:0;outline:0;color:var(--txt);font:inherit;font-size:14.5px;padding:13px 0;
+}
+.search input::placeholder{color:#61728c}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  background:var(--card);border:1px solid var(--line);color:var(--muted);
+  font:inherit;font-size:13px;font-weight:550;padding:9px 15px;border-radius:999px;cursor:pointer;transition:.2s;
+}
+.chip:hover{color:var(--txt);border-color:rgba(255,255,255,.2)}
+.chip.on{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
+
+/* ---------- cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;gap:12px;cursor:pointer;
+  transition:transform .28s cubic-bezier(.2,.7,.3,1),border-color .28s,box-shadow .28s;
+}
+.card:hover{transform:translateY(-5px);border-color:rgba(79,140,255,.5);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.card-top{display:flex;align-items:center;gap:10px}
+.num{
+  font-family:ui-monospace,'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+  color:var(--accent);background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.25);
+  padding:4px 10px;border-radius:7px;
+}
+.pill{font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:4px 10px;border-radius:7px}
+.pill.ok{color:var(--ok);background:rgba(55,211,153,.12);border:1px solid rgba(55,211,153,.28)}
+.pill.review{color:var(--gold);background:rgba(217,180,91,.12);border:1px solid rgba(217,180,91,.28)}
+.pill.draft{color:var(--muted);background:rgba(139,155,181,.12);border:1px solid rgba(139,155,181,.25)}
+.card h3{font-size:18px;font-weight:680;letter-spacing:-.3px}
+.card p{color:var(--muted);font-size:14px;flex:1}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:#6c7d97}
+.sanction{color:var(--warn);font-weight:600}
+.empty{grid-column:1/-1;text-align:center;padding:44px;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:var(--radius)}
+
+/* ---------- feature block ---------- */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}
+.feat h4{font-size:16px;margin-bottom:14px;color:var(--gold);letter-spacing:.3px}
+.art{border-left:2px solid rgba(79,140,255,.35);padding:0 0 18px 16px;position:relative}
+.art:last-child{padding-bottom:0}
+.art::before{
+  content:'';position:absolute;left:-6px;top:5px;width:10px;height:10px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 0 4px rgba(79,140,255,.16);
+}
+.art b{display:block;font-size:14.5px;margin-bottom:3px}
+.art span{font-size:13.5px;color:var(--muted)}
+.art em{
+  display:inline-block;font-style:normal;margin-top:6px;font-size:12.5px;font-weight:600;
+  color:var(--warn);background:rgba(255,122,89,.1);border:1px solid rgba(255,122,89,.25);padding:3px 9px;border-radius:6px;
+}
+.reasons{display:grid;gap:14px}
+.reason{display:flex;gap:14px;align-items:flex-start}
+.reason i{
+  flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  font-style:normal;font-weight:700;font-size:14px;color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+}
+.reason div b{display:block;font-size:15px;margin-bottom:2px}
+.reason div p{font-size:14px;color:var(--muted)}
+
+/* ---------- modal ---------- */
+.overlay{
+  position:fixed;inset:0;z-index:100;display:none;
+  background:rgba(4,7,14,.72);backdrop-filter:blur(6px);
+  padding:24px;overflow-y:auto;
+}
+.overlay.on{display:block;animation:fade .22s ease}
+.sheet{
+  max-width:760px;margin:6vh auto;background:var(--bg-soft);
+  border:1px solid var(--line);border-radius:20px;padding:30px;
+  animation:pop .3s cubic-bezier(.2,.8,.3,1);
+}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.98)}}
+.sheet h3{font-size:24px;margin:8px 0 14px;letter-spacing:-.5px}
+.sheet .body{color:#c3cede;font-size:15px}
+.sheet .body h5{font-size:16px;margin:22px 0 10px;color:var(--txt)}
+.sheet .body ul{padding-left:18px;color:var(--muted);font-size:14.5px}
+.close{
+  float:right;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--txt);
+  width:34px;height:34px;border-radius:10px;cursor:pointer;font-size:17px;line-height:1;
+}
+.close:hover{background:rgba(255,122,89,.18);border-color:rgba(255,122,89,.4)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);margin-top:70px;padding:34px 0;color:var(--muted);font-size:13.5px}
+.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.reveal{opacity:0;transform:translateY(22px);transition:.6s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:640px){.nav-links{display:none}.hero{padding:56px 0 40px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo"><span class="logo-mark">§</span>ПРАВОВОЙ КОДЕКС</a>
+    <nav class="nav-links">
+      <a href="#acts">Законопроекты</a>
+      <a href="#focus">Разбор статьи</a>
+      <a href="#how">Как подать</a>
+    </nav>
+    <a href="#acts" class="btn btn-primary">Читать акты</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="tag">⚖ Открытая нормативная база</div>
+    <h1>Законы, написанные <span>понятным языком</span></h1>
+    <p>Каждый законопроект — это структура составов, конкретные санкции и обоснование, почему норма нужна. Никаких «общих фраз»: только части, пункты и наказание за них.</p>
+    <div class="hero-actions">
+      <a href="#acts" class="btn btn-primary">Перейти к базе →</a>
+      <a href="#focus" class="btn btn-ghost">Пример разбора</a>
+    </div>
+    <div class="stats">
+      <div class="stat reveal"><b data-count="24">0</b><i>законопроектов</i></div>
+      <div class="stat reveal"><b data-count="87">0</b><i>частей и составов</i></div>
+      <div class="stat reveal"><b data-count="12">0</b><i>одобрено</i></div>
+      <div class="stat reveal"><b data-count="5">0</b><i>на рассмотрении</i></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="acts">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>База законопроектов</h2>
+        <p>Нажмите на карточку, чтобы открыть полный текст с обоснованием.</p>
+      </div>
+    </div>
+
+    <div class="tools">
+      <label class="search">
+        <span style="color:#61728c">⌕</span>
+        <input id="q" type="search" placeholder="Поиск по названию, статье, теме…">
+      </label>
+      <div class="chips" id="chips">
+        <button class="chip on" data-f="all">Все</button>
+        <button class="chip" data-f="Уголовный">Уголовный</button>
+        <button class="chip" data-f="Процесс">Процесс</button>
+        <button class="chip" data-f="Государство">Государство</button>
+        <button class="chip" data-f="Экономика">Экономика</button>
+      </div>
+    </div>
+
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="section" id="focus">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>Разбор: посягательство на гос. сотрудника</h2><p>Как выглядит «вилка» санкций и зачем она суду.</p></div></div>
+    <div class="split">
+      <div class="feat reveal">
+        <h4>СТРУКТУРА СОСТАВОВ</h4>
+        <div class="art"><b>89.1 — без тяжкого вреда</b><span>Посягательство на жизнь, здоровье или телесную неприкосновенность сотрудника при исполнении.</span><em>до 4 лет</em></div>
+        <div class="art"><b>89.2 — с тяжким вредом</b><span>То же деяние, повлёкшее причинение тяжкого вреда здоровью.</span><em>до 6 лет</em></div>
+        <div class="art"><b>89.3 — группой лиц</b><span>Посягательство, совершённое двумя и более лицами, независимо от тяжести вреда.</span><em>до 8 лет</em></div>
+      </div>
+      <div class="reasons">
+        <div class="reason reveal"><i>1</i><div><b>Закрывает разрыв между составами</b><p>Суд получает законную градацию: от царапины на дежурстве до покушения на прокурора — вместо одной укрупнённой нормы.</p></div></div>
+        <div class="reason reveal"><i>2</i><div><b>Работает против групповых нападений</b><p>Соучастие становится самостоятельным квалифицирующим признаком, а не латентным обстоятельством.</p></div></div>
+        <div class="reason reveal"><i>3</i><div><b>Превентивный эффект</b><p>Ответственность наступает за сам факт посягательства, а не за «удачный исход» нападения.</p></div></div>
+        <div class="reason reveal"><i>4</i><div><b>Привычная техника УК</b><p>Трёхчастная модель «база → тяжкий → отягчённый» понятна судье и проста в применении.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>Как подать законопроект</h2><p>Четыре шага — от идеи до текста, который читают без вопросов.</p></div></div>
+    <div class="grid">
+      <div class="card reveal"><span class="num">ШАГ 01</span><h3>Сформулируйте проблему</h3><p>Опишите конкретную ситуацию, которую норма не закрывает. «Нет закона» — не аргумент; «по этой ситуации суд расходится в решениях» — аргумент.</p></div>
+      <div class="card reveal"><span class="num">ШАГ 02</span><h3>Разбейте на части</h3><p>Базовый состав, квалифицированный, особо квалифицированный. Каждая часть = свой набор признаков и своя санкция.</p></div>
+      <div class="card reveal"><span class="num">ШАГ 03</span><h3>Пропишите санкции</h3><p>Наказание должно быть соразмерно общественной опасности и не пересекаться бессмысленно с соседними статьями.</p></div>
+      <div class="card reveal"><span class="num">ШАГ 04</span><h3>Добавьте обоснование</h3><p>Почему это нужно, что меняется, какие риски закрывает. Без обоснования текст не читают.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© Правовой кодекс — демонстрационный проект. Материалы носят учебный характер.</div>
+    <div class="chips"><a href="#acts" class="chip" style="text-decoration:none">База</a><a href="#how" class="chip" style="text-decoration:none">Подать акт</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="ov">
+  <div class="sheet">
+    <button class="close" id="cl">✕</button>
+    <span class="num" id="m-num"></span>
+    <h3 id="m-title"></h3>
+    <div class="body" id="m-body"></div>
+  </div>
+</div>
+
+<script>
+const ACTS=[
+ {n:"Ст. 89",t:"Посягательство на государственного сотрудника",cat:"Уголовный",st:"ok",s:"до 8 лет",
+  d:"Трёхчастная конструкция: базовый состав, состав с тяжким вредом и состав для группового нападения.",
+  body:`<h5>Части статьи</h5><ul><li><b>89.1</b> — посягательство без причинения тяжкого вреда здоровью → до 4 лет.</li><li><b>89.2</b> — то же с причинением тяжкого вреда → до 6 лет.</li><li><b>89.3</b> — деяние по 89.1/89.2, совершённое группой лиц (двумя и более), независимо от тяжести вреда → до 8 лет.</li></ul><h5>Примечание</h5><p>Государственные сотрудники — лица, состоящие на службе в государственных структурах и исполняющие служебные обязанности.</p><h5>Обоснование</h5><ul><li>Устраняет разрыв между простым и тяжким составом.</li><li>Закрывает проблему групповых нападений через самостоятельный состав.</li><li>Повышает защищённость гос. структур — наказание за сам факт посягательства.</li><li>Соответствует классической структуре УК.</li></ul>`},
+
+ {n:"Ст. 91",t:"Фальсификация доказательств",cat:"Процесс",st:"review",s:"до 5 лет",
+  d:"Ответственность за подлог материалов дела на любой стадии — от досмотра до исполнения решения.",
+  body:`<h5>Составы</h5><ul><li><b>91.1</b> — подделка документа, приобщённого к делу → до 3 лет.</li><li><b>91.2</b> — то же, повлёкшее заведомо незаконное решение → до 5 лет.</li><li><b>91.3</b> — фальсификация, совершённая лицом с процессуальными полномочиями → до 7 лет + лишение права занимать должность.</li></ul><h5>Зачем</h5><p>Сейчас подлог «на входе» и подлог «с последствиями» оцениваются одинаково, что не отражает разную общественную опасность.</p>`},
+
+ {n:"Ст. 112",t:"Злоупотребление служебным положением",cat:"Государство",st:"ok",s:"до 6 лет",
+  d:"Использование полномочий вопреки интересам службы, если деяние совершено из иной личной заинтересованности.",
+  body:`<h5>Ключевой признак</h5><p>Не корысть как таковая, а «иная личная заинтересованность»: карьера, честолюбие, желание скрыть ошибку, благополучие подчинённых.</p><h5>Градация</h5><ul><li>Существенное нарушение прав → до 4 лет.</li><li>С наступлением тяжких последствий → до 6 лет.</li></ul>`},
+
+ {n:"Ст. 134",t:"Незаконное предпринимательство",cat:"Экономика",st:"draft",s:"до 4 лет",
+  d:"Деятельность без регистрации либо с грубым нарушением требований лицензируемых видов.",
+  body:`<h5>Проектом предлагается</h5><ul><li>Выделить отдельный состав для деятельности без лицензии при наличии обязательного требования.</li><li>Увести крупный ущерб из признака «иные тяжкие последствия» в самостоятельную часть.</li></ul><p>Статус: черновик, требует расчёта порогов ущерба.</p>`},
+
+ {n:"Ст. 156",t:"Уклонение от исполнения решения суда",cat:"Процесс",st:"review",s:"до 3 лет",
+  d:"Неисполнение вступившего в силу судебного акта при наличии реальной возможности его исполнить.",
+  body:`<h5>Основной дефект текущей нормы</h5><p>Наказуемо только «злостное» неисполнение, при этом само понятие не раскрыто — суды толкуют по-разному.</p><h5>Что добавляется</h5><ul><li>Перечень действий, свидетельствующих об уклонении.</li><li>Освобождение от ответственности при полном исполнении до вынесения приговора.</li></ul>`},
+
+ {n:"Ст. 178",t:"Разглашение данных предварительного расследования",cat:"Государство",st:"ok",s:"до 2 лет",
+  d:"Разглашение сведений предварительного следствия без разрешения следователя лицом, предупреждённым о неразглашении.",
+  body:`<h5>Состав</h5><p>Материальный: требуется наступление последствий в виде вмешательства в ход расследования или нарушения прав участников.</p><h5>Санкция</h5><p>До 2 лет либо штраф с лишением права занимать определённые должности.</p>`}
+];
+
+const grid=document.getElementById('grid'),ov=document.getElementById('ov');
+let filt='all',word='';
+
+function render(){
+  const w=word.toLowerCase().trim();
+  const list=ACTS.filter(a=>(filt==='all'||a.cat===filt)&&(!w||(a.t+a.n+a.d+a.cat).toLowerCase().includes(w)));
+  grid.innerHTML=list.length?list.map((a,i)=>`
+    <article class="card reveal in" data-i="${ACTS.indexOf(a)}">
+      <div class="card-top"><span class="num">${a.n}</span><span class="pill ${a.st}">${{ok:'одобрен',review:'на рассмотрении',draft:'черновик'}[a.st]}</span></div>
+      <h3>${a.t}</h3>
+      <p>${a.d}</p>
+      <div class="card-foot"><span>${a.cat}</span><span class="sanction">санкция ${a.s}</span></div>
+    </article>`).join('')
+    :`<div class="empty">Ничего не найдено. Попробуйте другой запрос или снимите фильтр.</div>`;
+}
+render();
+
+document.getElementById('q').addEventListener('input',e=>{word=e.target.value;render()});
+document.getElementById('chips').addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;
+  document.querySelectorAll('.chip[data-f]').forEach(c=>c.classList.remove('on'));
+  b.classList.add('on');filt=b.dataset.f;render();
+});
+
+grid.addEventListener('click',e=>{
+  const c=e.target.closest('.card');if(!c||c.dataset.i===undefined)return;
+  const a=ACTS[+c.dataset.i];
+  document.getElementById('m-num').textContent=a.n+' • '+a.cat;
+  document.getElementById('m-title').textContent=a.t;
+  document.getElementById('m-body').innerHTML=a.body;
+  ov.classList.add('on');document.body.style.overflow='hidden';
+});
+function close(){ov.classList.remove('on');document.body.style.overflow=''}
+document.getElementById('cl').onclick=close;
+ov.addEventListener('click',e=>{if(e.target===ov)close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+
+/* counters + reveal */
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(!en.isIntersecting)return;
+  en.target.classList.add('in');
+  const b=en.target.querySelector('[data-count]');
+  if(b&&!b.dataset.done){b.dataset.done=1;const to=+b.dataset.count;let i=0;
+    const t=setInterval(()=>{i+=Math.ceil(to/28);if(i>=to){i=to;clearInterval(t)}b.textContent=i},26);}
+  io.unobserve(en.target);
+}),{threshold:.2});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
